@@ -21,3 +21,17 @@ exports.userTest = async function(req, res, next) {
 
 
 }
+
+exports.busTest = async function(req,res){
+
+    const terCod = req.params.terCode;
+    const selDiv = req.params.selDiv;
+
+
+
+
+
+
+
+
+}
