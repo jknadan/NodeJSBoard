@@ -73,3 +73,23 @@ exports.busTest = async function(req,res){
     }
 }
 
+exports.getRestArea = async function(req,res){
+    try{
+        const routeNm = req.params.routeNm;
+        console.log('routeNm :' + routeNm);
+
+        let url = 'http://data.ex.co.kr/openapi/restinfo/restBestfoodList?key=1357919734&type=json&' +
+            'routeNm=' +
+            routeNm +
+            '&numOfRows=3'
+
+        await axios.get(url).then((result) => {
+            return res.send(response(baseResponse.SUCCESS('성공입니다'),result.data))
+        })
+
+    }catch (err) {
+        console.log(err);
+        res.send(errResponse(baseResponse.FAIL));
+    }
+}
+
