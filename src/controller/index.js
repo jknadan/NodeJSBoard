@@ -4,7 +4,7 @@ const {response, errResponse} = require("../../config/response");
 const baseResponse = require("../../config/baseResponseDict");
 const logger = require('loglevel');
 const indexDao = require("../DAO");
-
+const axios = require('axios');
 
 
 exports.indexTest = async function (req, res, next) {
@@ -17,7 +17,7 @@ exports.indexTest = async function (req, res, next) {
         const result = await indexDao.indexTestQuery(connection);
         // connection을 썻으면 반드시 release를 해줘야한다. => 계속 connection 연결 시 중복 + Err
         connection.release();
-        
+
         return res.send(response(baseResponse.SUCCESS("성공 메세지를 입력하세요"),result));
 
 
@@ -29,3 +29,39 @@ exports.indexTest = async function (req, res, next) {
     }
 
 }
+
+exports.getDB = async function(req,res){
+    const cid = req.params.cid;
+    const terminalName = req.params.terminalName;
+    console.log(cid);
+    const url = "https://api.odsay.com/v1/api/intercityBusTerminals?lang=0&" +
+        "CID=" +
+        cid +
+        "&terminalName=" +
+        encodeURIComponent(terminalName) +
+        "&apiKey=" +
+        'HdCqR2fdx9sP' +
+            encodeURIComponent('+') +
+            'ae1CKFoosB6FRTKbZEluSjHXTbKcyY'
+
+
+    try{
+        const connection = await pool.getConnection((conn)=> conn);
+
+        axios.get(url).then((result)=>{
+            // const [package] =
+            console.log(url);
+            // console.log(result);
+            res.send(response(baseResponse.SUCCESS('성공입니다'),result.data))
+        })
+
+
+
+    }catch (err) {
+        console.log(err);
+        res.send(errResponse(baseResponse.FAIL));
+    }
+
+
+}
+

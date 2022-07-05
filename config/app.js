@@ -21,7 +21,7 @@ app.use(cors());
 
 // TODO : URL 추가시 해당 아래에 route 추가!
 
-const indexRouter = require('../src/routes');
+const indexRouter = require('../src/routes/index');
 const usersRouter = require('../src/routes/users');
 
 app.use('/', indexRouter);

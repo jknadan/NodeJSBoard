@@ -37,7 +37,7 @@ exports.busTest = async function(req,res){
 
         console.log(url);
 
-        await axios.get(url,{
+        axios.get(url,{
             headers: {
                 'x-Gateway-APIKey' : 'f3b6d44f-7278-43dd-856f-65ee49e0f4cd'
             }
