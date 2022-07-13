@@ -30,15 +30,22 @@ exports.indexTest = async function (req, res, next) {
 
 }
 
+// 도시코드와 터미널 이름에 따른 출발/도착 가능한 터미널 목록 조회
+// router.get('/bus/:cid/:terminalName',index.getDB);
+
 exports.getDB = async function(req,res){
+
+    // request 에서 CityCode 와 터미널 이름 가져오기
     const cid = req.params.cid;
     const terminalName = req.params.terminalName;
-    console.log(cid);
+
+    // 요청할 OpenAPI 주소
     const url = "https://api.odsay.com/v1/api/intercityBusTerminals?lang=0&" +
         "CID=" +
         cid +
         "&terminalName=" +
         encodeURIComponent(terminalName) +
+        // 발급받은 API key 입력
         "&apiKey=" +
         'HdCqR2fdx9sP' +
             encodeURIComponent('+') +
@@ -46,18 +53,17 @@ exports.getDB = async function(req,res){
 
 
     try{
-        const connection = await pool.getConnection((conn)=> conn);
-
+        // axios를 이용한 Server Side url request
         axios.get(url).then((result)=>{
-            // const [package] =
-            console.log(url);
-            // console.log(result);
+            // API 요청 받은 후 받은 결과에서 data 추출 후 성공 메세지 출력
             res.send(response(baseResponse.SUCCESS('성공입니다'),result.data))
         })
 
 
 
     }catch (err) {
+
+        // 에러 발생 시 log 출력 및 응답 메세지 출력
         console.log(err);
         res.send(errResponse(baseResponse.FAIL));
     }
@@ -65,3 +71,13 @@ exports.getDB = async function(req,res){
 
 }
 
+exports.login = async function(req,res){
+
+    const email = req.body.email;
+    const pw = req.body.pw;
+
+    console.log([email,pw]);
+
+    res.send(response(baseResponse.SUCCESS("성공입니다"),[email,pw]));
+
+}

@@ -8,4 +8,6 @@ router.get('/index', index.indexTest);
 
 router.get('/bus/:cid/:terminalName',index.getDB);
 
+router.post('/user/login',index.login);
+
 module.exports = router;

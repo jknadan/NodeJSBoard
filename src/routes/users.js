@@ -6,7 +6,11 @@ router.get('/user', user.userTest);
 
 router.get('/user/bus/:selDiv/:terCod',user.busTest);
 
-router.get('/bus/:routeNm/rest-area',user.getRestArea);
+router.get('/user/bus',user.getBusList);
+
+router.get('/user/bus/:terNm',user.searchTerminal);
+
+router.get('/bus/rest-area',user.getRestArea);
 
 
 
